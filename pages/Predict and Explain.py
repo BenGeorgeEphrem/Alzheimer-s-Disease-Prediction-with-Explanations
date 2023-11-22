@@ -35,7 +35,7 @@ tx = """"This prediction app is created based on the Alzheimer's disease dataset
 The ML model used for the prediction is Random Forest Classifier"""
 st.sidebar.info(tx)
 
-@st.cache_data
+@st.cache
 def load_data():
     loaded_model1 = pickle.load(open(filename, 'rb'))
     alz_df = pd.read_csv("alz_balanc.csv")
