@@ -35,14 +35,14 @@ tx = """"This prediction app is created based on the Alzheimer's disease dataset
 The ML model used for the prediction is Random Forest Classifier"""
 st.sidebar.info(tx)
 
-#@st.cache
-#def load_data():
-alz_df = pd.read_csv("alz_balanc.csv")
-loaded_model = pickle.load(open(filename, 'rb'))
-X = alz_df.iloc[:,:-1]
-y = alz_df.iloc[:,-1]
-#return loaded_model1, X1, y1
-#loaded_model, X, y = load_data()
+@st.cache_data
+def load_data():
+    alz_df = pd.read_csv("alz_balanc.csv")
+    loaded_model1 = pickle.load(open(filename, 'rb'))
+    X1 = alz_df.iloc[:,:-1]
+    y1 = alz_df.iloc[:,-1]
+    return loaded_model1, X1, y1
+loaded_model, X, y = load_data()
 
 age = st.number_input("Age of the person",50,100,step=1, help = "Current age of the individual")
 cdr = st.number_input("CDRSB(0-20)",0.0,20.0,step=0.1, help="Clinical Dementia Rating Scale Sum of Boxes")
