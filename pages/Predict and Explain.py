@@ -37,8 +37,8 @@ st.sidebar.info(tx)
 
 #@st.cache
 #def load_data():
-loaded_model = pickle.load(open(filename, 'rb'))
 alz_df = pd.read_csv("alz_balanc.csv")
+loaded_model = pickle.load(open(filename, 'rb'))
 X = alz_df.iloc[:,:-1]
 y = alz_df.iloc[:,-1]
 #return loaded_model1, X1, y1
