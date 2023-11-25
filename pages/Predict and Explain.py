@@ -46,12 +46,12 @@ loaded_model, X, y = load_data()
 
 age = st.number_input("Age of the person",50,100,step=1, help = "Current age of the individual")
 cdr = st.number_input("CDRSB(0-20)",0.0,20.0,step=0.1, help="Clinical Dementia Rating Scale Sum of Boxes")
-ads11 = st.number_input('ADAS11 (0 - 75)',0.0,75.0,step=0.01,help="Alzheimer's Disease Assessment Scale (11 items) ")
-ads13 = st.number_input("ADAS13 (0 - 85)",0.0,85.0,step=0.01,help="Alzheimer's Disease Assessment Scale (13 items) ")
-mmse = st.number_input("MMSE (0 - 30)",0.0,30.0,step=0.01, help="Mini-Mental State Examination Score")
-rai = st.number_input("RAVLT_immediate (0 - 75)",0.0,75.0,step=0.01, help = "Rey Auditory Verbal Learning Test - Immediate Recall")
-ral = st.number_input("RAVLT_learning (-5 - 15)",-5.0,15.0,step=0.01, help="Rey Auditory Verbal Learning Test - Learning Score")
-faq = st.number_input("FAQ (0 - 30)",0.0,30.0,step=0.01,help="Functional Activities Questionnaire Score")
+ads11 = st.number_input('ADAS11 (0 - 75)',0.0,75.0,step=0.1,help="Alzheimer's Disease Assessment Scale (11 items) ")
+ads13 = st.number_input("ADAS13 (0 - 85)",0.0,85.0,step=0.1,help="Alzheimer's Disease Assessment Scale (13 items) ")
+mmse = st.number_input("MMSE (0 - 30)",0.0,30.0,step=0.1, help="Mini-Mental State Examination Score")
+rai = st.number_input("RAVLT_immediate (0 - 75)",0.0,75.0,step=0.1, help = "Rey Auditory Verbal Learning Test - Immediate Recall")
+ral = st.number_input("RAVLT_learning (-5 - 15)",-5.0,15.0,step=0.1, help="Rey Auditory Verbal Learning Test - Learning Score")
+faq = st.number_input("FAQ (0 - 30)",0.0,30.0,step=0.1,help="Functional Activities Questionnaire Score")
 hp = st.number_input("Hippocampus (2200,11300)",2200,11300,step=1,help = "Hippocampal volume ")
 dic = {'AGE':age, 'CDRSB':cdr, 'ADAS11':ads11, 'ADAS13':ads13, 'MMSE':mmse,
        'RAVLT_immediate':rai, 'RAVLT_learning':ral, 'FAQ':faq, 'Hippocampus':hp}
@@ -78,7 +78,7 @@ if st.session_state.button_clicked:
     if sel == "LIME":
         explainer = LimeTabularExplainer(X.values, 
                                          feature_names=X.columns, 
-                                         class_names=['DEMENTIA', 'MCI', 'NL'])
+                                         class_names=['DEMENTIA', 'MCI', 'NL'], random_state=np.random.seed(10))
 
 
         instance_to_explain = df.iloc[0]
@@ -145,6 +145,7 @@ if st.session_state.button_clicked:
             # SHAP Explanation
         shexplainer = shap.Explainer(loaded_model)
         shap_values = shexplainer.shap_values(df)
+        np.random.seed(10)
 
 
         # Summary Plot
